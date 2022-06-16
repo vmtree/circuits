@@ -44,4 +44,4 @@ template MassUpdate(levels, numUpdates) {
     }
 }
 
-component main {public [startIndex, leaves, startSubtrees]} = MassUpdate(20, 10);
+component main {public [startIndex, leaves, startSubtrees, endSubtrees]} = MassUpdate(20, 10);
