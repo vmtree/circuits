@@ -1,6 +1,10 @@
-const { fullProve } = require('snarkjs').groth16;
-const { utils, calculateNextRoot, mimcSponge: hasher } = require('vmtjs');
 const { stringifyBigInts } = require('ffjavascript').utils;
+const {
+    calculateNextRoot,
+    generateProof,
+    mimcSponge: hasher,
+    utils
+} = require('vmtjs');
 
 const { unsafeRandomLeaves } = utils;
 const wasmFileName = './mimc/out/mass_update_js/mass_update.wasm';
@@ -20,7 +24,7 @@ async function main() {
         newRoot
     });
 
-    const { proof, publicSignals } = await fullProve(input, wasmFileName, zkeyFileName);
+    const { proof, publicSignals } = await generateProof(input, wasmFileName, zkeyFileName);
     console.timeEnd('mimc proof time');
 
     return { proof, publicSignals };
