@@ -5,6 +5,7 @@ const { BigNumber } = require("@ethersproject/bignumber");
 const {
     MerkleTree,
     generateProof,
+    verifyProof,
     poseidon: hasher,
     utils
 } = require('vmtjs');
@@ -12,6 +13,7 @@ const {
 const { unsafeRandomLeaves } = utils;
 const wasmFileName = './poseidon/out/associate_data_js/associate_data.wasm';
 const zkeyFileName =  './poseidon/out/associate_data.zkey';
+const verifierJson = require('../poseidon/out/associate_data_verifier.json');
 
 async function main() {
     console.time('associate data proof time');
@@ -53,11 +55,10 @@ async function main() {
 
     const { proof, publicSignals } = await generateProof(input, wasmFileName, zkeyFileName);
     console.timeEnd('associate data proof time');
-
     return { proof, publicSignals };
 }
 
-main().then(proof => {
-    // console.log(proof);
+main().then(async ({proof, publicSignals}) => {
+    console.log(await verifyProof({proof, publicSignals, verifierJson}));
     process.exit();
 }).catch(console.error);
