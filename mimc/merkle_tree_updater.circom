@@ -32,47 +32,47 @@ template MerkleTreeUpdater(levels) {
     signal input leaf;
     signal input filledSubtrees[levels];
     signal output newSubtrees[levels];
+    signal output newRoot;
 
     component hashers[levels];
     component leftSelectors[levels];
     component rightSelectors[levels];
-    component newSubtreeSelectors[levels];
     component indexBits = Num2Bits(levels);
     indexBits.in <== index;
 
     var zeros[32] = [
-        0x2fe54c60d3acabf3343a35b6eba15db4821b340f76e741e2249685ed4899af6c,
-        0x256a6135777eee2fd26f54b8b7037a25439d5235caee224154186d2b8a52e31d,
-        0x1151949895e82ab19924de92c40a3d6f7bcb60d92b00504b8199613683f0c200,
-        0x20121ee811489ff8d61f09fb89e313f14959a0f28bb428a20dba6b0b068b3bdb,
-        0x0a89ca6ffa14cc462cfedb842c30ed221a50a3d6bf022a6a57dc82ab24c157c9,
-        0x24ca05c2b5cd42e890d6be94c68d0689f4f21c9cec9c0f13fe41d566dfb54959,
-        0x1ccb97c932565a92c60156bdba2d08f3bf1377464e025cee765679e604a7315c,
-        0x19156fbd7d1a8bf5cba8909367de1b624534ebab4f0f79e003bccdd1b182bdb4,
-        0x261af8c1f0912e465744641409f622d466c3920ac6e5ff37e36604cb11dfff80,
-        0x0058459724ff6ca5a1652fcbc3e82b93895cf08e975b19beab3f54c217d1c007,
-        0x1f04ef20dee48d39984d8eabe768a70eafa6310ad20849d4573c3c40c2ad1e30,
-        0x1bea3dec5dab51567ce7e200a30f7ba6d4276aeaa53e2686f962a46c66d511e5,
-        0x0ee0f941e2da4b9e31c3ca97a40d8fa9ce68d97c084177071b3cb46cd3372f0f,
-        0x1ca9503e8935884501bbaf20be14eb4c46b89772c97b96e3b2ebf3a36a948bbd,
-        0x133a80e30697cd55d8f7d4b0965b7be24057ba5dc3da898ee2187232446cb108,
-        0x13e6d8fc88839ed76e182c2a779af5b2c0da9dd18c90427a644f7e148a6253b6,
-        0x1eb16b057a477f4bc8f572ea6bee39561098f78f15bfb3699dcbb7bd8db61854,
-        0x0da2cb16a1ceaabf1c16b838f7a9e3f2a3a3088d9e0a6debaa748114620696ea,
-        0x24a3b3d822420b14b5d8cb6c28a574f01e98ea9e940551d2ebd75cee12649f9d,
-        0x198622acbd783d1b0d9064105b1fc8e4d8889de95c4c519b3f635809fe6afc05,
-        0x29d7ed391256ccc3ea596c86e933b89ff339d25ea8ddced975ae2fe30b5296d4,
-        0x19be59f2f0413ce78c0c3703a3a5451b1d7f39629fa33abd11548a76065b2967,
-        0x1ff3f61797e538b70e619310d33f2a063e7eb59104e112e95738da1254dc3453,
-        0x10c16ae9959cf8358980d9dd9616e48228737310a10e2b6b731c1a548f036c48,
-        0x0ba433a63174a90ac20992e75e3095496812b652685b5e1a2eae0b1bf4e8fcd1,
-        0x019ddb9df2bc98d987d0dfeca9d2b643deafab8f7036562e627c3667266a044c,
-        0x2d3c88b23175c5a5565db928414c66d1912b11acf974b2e644caaac04739ce99,
-        0x2eab55f6ae4e66e32c5189eed5c470840863445760f5ed7e7b69b2a62600f354,
-        0x002df37a2642621802383cf952bf4dd1f32e05433beeb1fd41031fb7eace979d,
-        0x104aeb41435db66c3e62feccc1d6f5d98d0a0ed75d1374db457cf462e3a1f427,
-        0x1f3c6fd858e9a7d4b0d1f38e256a09d81d5a5e3c963987e2d4b814cfab7c6ebb,
-        0x2c7a07d20dff79d01fecedc1134284a8d08436606c93693b67e333f671bf69cc
+        0x1afaac8e3a7748c3f03aabbaf80c9593fb24ab3f9cad18f143a9dcc17849d35c,
+        0x0551a3bdc30f8692f5f37ab5175d2877e0aec4ddb31b28678615c5c574bdcb15,
+        0x133ca29bafe3665106c090f5030538db3486bf2e913fa2755592db87807dbfbc,
+        0x28de5dc92c5127340b6746a6cd21fffea81bd6b8832702fbe48c39d6676db189,
+        0x0efa0ca281f28826de3205d872188d38e2b6baed87a7c45255314ca011ac9318,
+        0x299329d6b8413840b9179050d9296e677ab5a3899b18fd82fb001230f0b99c5f,
+        0x1e1b6cda2bd93da153456b69e4a7c0e82924b2011b20934d08e683e4e99dfe61,
+        0x2017136a0741252c1b21ae36c3df97c19137cc1c89c2ee888523663d02b70d1b,
+        0x2fe4d873b3087065e9cf5d57b37a691f326b59a2be9ce571bf7ac5aa7c930f11,
+        0x2f54a4edf9f3111d7f66a3e477a92b9d9e79c4df0d15b18ee40fc9b8db907373,
+        0x22d719998741e04b8052753ece2abc4d40e0a916a4966dab445d233c814b84eb,
+        0x007b3db2acd0e3e790ba01871aea4860647607747687f3d0f6ca48715ce17ca5,
+        0x1112bc907e8ab44a6bab06d6de75c03dc22ec7caaa02585b73451bc8981db2c1,
+        0x2d49fd4645eacc1a860c15c9a622177dfe330ad8483aeca86cbaf1881873b25b,
+        0x2e5800f097d961939861c0492f1f87f3fbba08fce9b20128ab591ce63a645e6c,
+        0x1fb83fe7fd4b2a17a0aa3956d99040939ae1ead90fa0cb5aa31065919987e4d2,
+        0x1ff3cbfad32b3de30b22ca7d6f44c0c46f6b7a80d7725777bcea382617032224,
+        0x0ee59ace286991419d97a46411dd9c5082f28e02427c171cd7034ee8c87bf52c,
+        0x257bde738852014ce37afe5264772af1f98b816c558762ce358f6335e32ebad6,
+        0x0a78cad4aabddd2c50ed181f2ec3afb4462db6f499308a84890f55b65b864c60,
+        0x0a6954ccfa0dca9abc94db27523cc32c765e0ee480c5d476339a60127d9df3a7,
+        0x1b0b2a42d07f4661d79a7a8291d1b246dadf0c326539f01a11a5a0f7f3acfa3a,
+        0x1d7f3514687b0910c18ce5b0f76993972336a4e4c14076b82bc3d32ba341f3a2,
+        0x121c02165f10a7a7d47acb28ce004aab05cde7fb4632c9b8702de23f9cbfee6d,
+        0x21707aadd4f6140b00b790498cbfa4c004180bd788c3e8a2014b7f18ae2b9e75,
+        0x20e8791eb931b7e0c1caa25a0fa7575be183abb56f1a6590dcd7c0183049566d,
+        0x2b046c54529080ccfd8369aea4ee2d7d4269cabc0ab89599e5d8e495049ff505,
+        0x2aae8efae507440d0d552a07c35c62ae410dc608d1257201a1d504372446cbbc,
+        0x121e284193e06f5cb05cc662d06b37cf92936e951b53257546ecb4fe41cb616d,
+        0x1c574b3f14952ea54d30f1758ccf081ac153838e28775019601b97fe4b2780f7,
+        0x291ac816b1e1505684596206c68d07a6268aa82c305a9d87eb400f68a6bc8351,
+        0x2b29195cac67074e6fa65054561aa489e3ebc1ce595270f43a8cee097cb7053
     ];
 
     for (var i = 0; i < levels; i++) {
@@ -83,6 +83,7 @@ template MerkleTreeUpdater(levels) {
         leftSelectors[i].in[0] <== currentLevelHash;
         leftSelectors[i].in[1] <== filledSubtrees[i];
         leftSelectors[i].s <== selector;
+        newSubtrees[i] <== leftSelectors[i].out;
 
         rightSelectors[i] = Selector();
         rightSelectors[i].in[0] <== zeros[i];
@@ -92,12 +93,7 @@ template MerkleTreeUpdater(levels) {
         hashers[i] = HashLeftRight();
         hashers[i].left <== leftSelectors[i].out;
         hashers[i].right <== rightSelectors[i].out;
-
-        newSubtreeSelectors[i] = Selector();
-        newSubtreeSelectors[i].in[0] <== currentLevelHash;
-        newSubtreeSelectors[i].in[1] <== filledSubtrees[i];
-        newSubtreeSelectors[i].s <== selector;
-
-        newSubtrees[i] <== newSubtreeSelectors[i].out;
     }
+
+    newRoot <== hashers[levels - 1].hash;
 }

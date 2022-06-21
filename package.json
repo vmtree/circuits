@@ -10,6 +10,6 @@
     "circomlibjs": "^0.1.2",
     "ffjavascript": "^0.2.55",
     "snarkjs": "^0.4.22",
-    "vmtjs": "https://github.com/Nobody-Labs/vmt-js.git"
+    "vmtjs": "Nobody-Labs/vmt-js"
   }
 }

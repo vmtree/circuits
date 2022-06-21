@@ -7,6 +7,7 @@ template MassUpdate(levels, numUpdates) {
     signal input leaves[numUpdates];
     signal input startSubtrees[levels];
     signal input endSubtrees[levels];
+    signal input newRoot;
 
     component trees[numUpdates];
 
@@ -23,6 +24,8 @@ template MassUpdate(levels, numUpdates) {
     for (var k = 0; k < levels; k++) {
         endSubtrees[k] === trees[numUpdates - 1].newSubtrees[k];
     }
+
+    newRoot === trees[numUpdates - 1].newRoot;
 }
 
-component main {public [startIndex, leaves, startSubtrees, endSubtrees]} = MassUpdate(20, 16);
+component main {public [startIndex, leaves, startSubtrees, endSubtrees, newRoot]} = MassUpdate(20, 16);
