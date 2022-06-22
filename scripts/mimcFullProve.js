@@ -5,7 +5,7 @@ const {
     verifyProof,
     mimcSponge: hasher,
     utils
-} = require('vmtjs');
+} = require('vmtree-sdk');
 
 const { unsafeRandomLeaves } = utils;
 const wasmFileName = './mimc/out/mass_update_js/mass_update.wasm';

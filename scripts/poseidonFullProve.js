@@ -5,7 +5,7 @@ const {
     verifyProof,
     poseidon: hasher,
     utils
-} = require('vmtjs');
+} = require('vmtree-sdk');
 
 const { unsafeRandomLeaves } = utils;
 const wasmFileName = './poseidon/out/mass_update_js/mass_update.wasm';

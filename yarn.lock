@@ -320,9 +320,9 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-vmtjs@Nobody-Labs/vmt-js:
+vmtree-sdk@vmtree/sdk:
   version "0.1.0"
-  resolved "https://codeload.github.com/Nobody-Labs/vmt-js/tar.gz/3d7151a4c8078f0c793487df10a13e379d436b6f"
+  resolved "https://codeload.github.com/vmtree/sdk/tar.gz/556a2ac9ae85982a84a7991185315b2d0faf54ce"
   dependencies:
     "@ethersproject/bignumber" "^5.6.0"
     "@ethersproject/bytes" "^5.6.1"

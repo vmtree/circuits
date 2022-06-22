@@ -11,9 +11,6 @@ template CommitmentNullifierHasher() {
     signal output commitment;
     signal output nullifier;
 
-    // commitment = Poseidon([secret, 0])
-    // nullifier = Poseidon([secret, 1 + offset + index])
-
     component commitmentHasher = Poseidon(2);
     commitmentHasher.inputs[0] <== secret;
     commitmentHasher.inputs[1] <== 0;
@@ -25,11 +22,6 @@ template CommitmentNullifierHasher() {
     nullifier <== nullifierHasher.out;
 }
 
-/*
-    This template name deviates from `withdraw` because it's more general than
-    that. The `integrity` parameter is there to bind certain data to the proof,
-    and it is constructed from the hash of relevant data in a smart contract.
-*/
 template AssociateData(levels) {
     signal input root;
     signal input offset;
@@ -40,21 +32,11 @@ template AssociateData(levels) {
     signal input index;
     signal input pathElements[levels];
 
-    /*
-        Require index to be in range of indexes for a tree of depth `levels`.
-        We need this constraint because otherwise a malicious depositor could
-        repeatedly prepend extra bits beyond `levels`, producing new nullifier
-        hashes for the same deposit.
-    */
-    component lessThan = LessThan(248);
+    component lessThan = LessThan(254);
     lessThan.in[0] <== index;
     lessThan.in[1] <== 2 ** levels;
     lessThan.out === 1;
 
-    /*
-        Offset should be hardcoded in the contract that uses this verifier. Care
-        should be taken to choose appropriate offsets!
-    */
     component hasher = CommitmentNullifierHasher();
     hasher.secret <== secret;
     hasher.index <== index;
@@ -69,7 +51,6 @@ template AssociateData(levels) {
     }
     tree.root === root;
 
-    // associates arbitrary data with the merkle proof
     signal integritySquare;
     integritySquare <== integrity * integrity;
 }

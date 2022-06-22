@@ -22,7 +22,7 @@ template DualMux() {
     signal input s;
     signal output out[2];
 
-    // Removed because Num2Bits generates binary constraints.
+    // Removed because Num2Bits already generates binary constraints.
     // s * (1 - s) === 0
     out[0] <== (in[1] - in[0])*s + in[0];
     out[1] <== (in[0] - in[1])*s + in[1];

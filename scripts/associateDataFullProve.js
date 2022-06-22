@@ -8,7 +8,7 @@ const {
     verifyProof,
     poseidon: hasher,
     utils
-} = require('vmtjs');
+} = require('vmtree-sdk');
 
 const { unsafeRandomLeaves } = utils;
 const wasmFileName = './poseidon/out/associate_data_js/associate_data.wasm';
@@ -18,16 +18,19 @@ const verifierJson = require('../poseidon/out/associate_data_verifier.json');
 async function main() {
     console.time('associate data proof time');
 
-    const offset = 0;
-    const index = 0;
     const secret = unsafeRandomLeaves(1)[0];
+    const index = 0;
+    const offset = 0;
+
     const commitment = hasher([secret, 0n]);
     const nullifier = hasher([secret, 1n]);
+
     const merkleTree = new MerkleTree({ hasher, leaves: [commitment] });
     const root = merkleTree.root;
     const { pathElements } = merkleTree.proof(commitment);
 
-    // simulate a mixer withdrawal
+    // simulate a mixer withdrawal. this integrity value is supposed to be 
+    // hardcoded in the mixer's solidity contract.
     const integrity = BigNumber.from(keccak256(
         [
             'address', // recipient
@@ -44,10 +47,12 @@ async function main() {
     )).mod(utils.F.p.toString()).toString();
 
     const input = stringifyBigInts({
+        // public inputs
         root,
         offset,
         nullifier,
         integrity,
+        // private inputs
         secret,
         index,
         pathElements
