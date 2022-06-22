@@ -43,6 +43,10 @@ Run to generate and verify a zkp proof of membership: a merkle proof in zero kno
 $ node ./scripts/associateDataFullProve.js
 ```
 
+## Proof times
+Poseidon is able to accommodate more deposits than MiMC, yet has smaller proving keys and a faster proof generation time. The associate data proof is fast which is nice because it is typically performed in a web browser by a user interacting with some dapp.
+![proof times for each circuit](./img/proof_times.png)
+
 # Circuits
 
 ## mimc
@@ -53,5 +57,3 @@ The poseidon circuit requires far less constraints -- we were able to increase t
 
 ## associate_data
 The way this circuit is designed allows it to be used for mixing, voting, or airdrops, to name a few. The merkle proof is done in zero knowledge, which allows a prover to show that they belong to a set of commitments (e.g., they deposited a commitment into a mixer, or they are a member of a zk voters merkle tree) without revealing which commitment is theirs. Then, the prover attaches some public data that is meaningful to the protocol (e.g., the fee data and recipient of a mixer withdrawal, or the vote decision chosen by the private voter). The arbitrary data can be hardcoded at the smart contract level without requiring to make new circuits. Furthermore, we allow for multiple nullifier values to be used by adding an offset parameter, which would allow for each commitment to be used twice in the same tree. This feature may be unnecessary but I think it has a unique purpose that makes the circuit even more generalizable. It can be hardcoded to simply only use one offset to recover the single-action characteristic that prevents double spends in mixers.
-
-![mimc vs poseidon](./img/mimc-vs-poseidon.png)
