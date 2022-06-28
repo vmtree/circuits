@@ -26,7 +26,7 @@ async function main() {
         newRoot
     });
 
-    const { proof, publicSignals } = await generateProof(input, wasmFileName, zkeyFileName);
+    const { proof, publicSignals } = await generateProof({input, wasmFileName, zkeyFileName});
     console.timeEnd('poseidon mass_update proof time');
 
     return { proof, publicSignals };

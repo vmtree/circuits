@@ -10,14 +10,14 @@ template CommitmentNullifierHasher() {
     signal output commitment;
     signal output nullifier;
 
-    component commitmentHasher = Poseidon(2);
+    component commitmentHasher = Poseidon(1);
     commitmentHasher.inputs[0] <== secret;
-    commitmentHasher.inputs[1] <== 0;
     commitment <== commitmentHasher.out;
 
-    component nullifierHasher = Poseidon(2);
+    component nullifierHasher = Poseidon(3);
     nullifierHasher.inputs[0] <== secret;
-    nullifierHasher.inputs[1] <== 1 + offset + index;
+    nullifierHasher.inputs[1] <== offset;
+    nullifierHasher.inputs[2] <== index;
     nullifier <== nullifierHasher.out;
 }
 

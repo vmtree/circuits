@@ -11,19 +11,19 @@ const {
 } = require('vmtree-sdk');
 
 const { unsafeRandomLeaves } = utils;
-const wasmFileName = './poseidon/out/associate_data_js/associate_data.wasm';
-const zkeyFileName =  './poseidon/out/associate_data.zkey';
-const verifierJson = require('../poseidon/out/associate_data_verifier.json');
+const wasmFileName = './poseidon/out/associate_data_v2_js/associate_data_v2.wasm';
+const zkeyFileName =  './poseidon/out/associate_data_v2.zkey';
+const verifierJson = require('../poseidon/out/associate_data_v2_verifier.json');
 
 async function main() {
-    console.time('associate data proof time');
+    console.time('associate data v2 proof time');
 
     const secret = unsafeRandomLeaves(1)[0];
     const index = 0n;
     const offset = 0n;
 
-    const commitment = hasher([secret, 0n]);
-    const nullifier = hasher([secret, 1n + offset + index]);
+    const commitment = hasher([secret]);
+    const nullifier = hasher([secret,offset, index]);
 
     const merkleTree = new MerkleTree({ hasher, leaves: [commitment] });
     const root = merkleTree.root;
@@ -59,7 +59,7 @@ async function main() {
     });
 
     const { proof, publicSignals } = await generateProof({input, wasmFileName, zkeyFileName});
-    console.timeEnd('associate data proof time');
+    console.timeEnd('associate data v2 proof time');
     return { proof, publicSignals };
 }
 

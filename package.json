@@ -10,5 +10,9 @@
     "circomlib": "^2.0.3",
     "ffjavascript": "^0.2.55",
     "vmtree-sdk": "vmtree/sdk"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0"
   }
 }

@@ -13,7 +13,8 @@ $ cd vmtree-circuits
 $ yarn
 ```
 
-Setup the circuits. Be warned, this downloads ~755 MB of files. The mimc circuit requires a powers of tau file that's 600 MB, while the poseidon circuit requires a powers of tau file that's only 151 MB.
+Setup the circuits. Be warned, this downloads ~755 MB of files. The mimc circuit requires a powers of tau file that's 600 MB, while the poseidon circuit requires a powers of tau file that is 151 MB. The zero knowledge merkle proof circuit has a small powers of tau file, it's only 9.5MB.
+
 Setup the Poseidon VMTree:
 ```sh
 $ ./scripts/setup_poseidon.sh
@@ -28,17 +29,17 @@ $ ./scripts/setup_poseidon_associate_data.sh
 ```
 
 ## Test
-Run to generate and verify a zkp for a random VMTree update using the Poseidon hash function.
+Run to generate and verify a zkp of VMTree update using the Poseidon hash function.
 ```sh
 $ node ./scripts/poseidonFullProve.js
 ```
 
-Run to generate and verify a zkp for a random VMTree update using the MiMCSponge hash function.
+Run to generate and verify a zkp of VMTree update using the MiMCSponge hash function.
 ```sh
 $ node ./scripts/mimcFullProve.js
 ```
 
-Run to generate and verify a zkp proof of membership: a merkle proof in zero knowledge that is associated with arbitrary public data and with configurable nullifier hashes.
+Run to generate and verify a zkp of membership: a merkle proof in zero knowledge that is associated with arbitrary public data and with configurable nullifier hashes.
 ```sh
 $ node ./scripts/associateDataFullProve.js
 ```
