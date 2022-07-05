@@ -3,11 +3,11 @@ pragma circom 2.0.0;
 include "./merkle_tree_updater.circom";
 
 template MassUpdate(levels, numUpdates) {
+    signal input newRoot;
     signal input startIndex;
-    signal input leaves[numUpdates];
     signal input startSubtrees[levels];
     signal input endSubtrees[levels];
-    signal input newRoot;
+    signal input leaves[numUpdates];
 
     component trees[numUpdates];
 
@@ -28,4 +28,4 @@ template MassUpdate(levels, numUpdates) {
     newRoot === trees[numUpdates - 1].newRoot;
 }
 
-component main {public [startIndex, leaves, startSubtrees, endSubtrees, newRoot]} = MassUpdate(20, 16);
+component main {public [newRoot, startIndex, startSubtrees, endSubtrees, leaves]} = MassUpdate(20, 16);

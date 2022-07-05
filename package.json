@@ -1,13 +1,14 @@
 {
   "name": "vmtree",
   "version": "0.2.0",
-  "description": "Verifiable Merkle Trees JS Library",
+  "description": "Verifiable Merkle Trees Circuits",
   "main": "index.js",
   "license": "MIT",
   "private": true,
   "dependencies": {
     "@ethersproject/solidity": "^5.6.1",
     "circomlib": "^2.0.3",
+    "circomlibjs": "^0.1.6",
     "ffjavascript": "^0.2.55",
     "vmtree-sdk": "vmtree/sdk"
   },

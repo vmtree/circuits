@@ -30,3 +30,8 @@ echo "[SETUP] - Exporting verification key to json"
 snarkjs zkev \
     ./poseidon/out/mass_update.zkey \
     ./poseidon/out/mass_update_verifier.json
+
+echo "[SETUP] - Exporting verification key to solidity"
+snarkjs zkesv \
+    ./poseidon/out/mass_update.zkey \
+    ./poseidon/out/mass_update_verifier.sol

@@ -17,13 +17,14 @@ async function main() {
     const leaves = unsafeRandomLeaves(16);
 
     const { filledSubtrees: startSubtrees } = calculateNextRoot({ hasher });
+
     const { root: newRoot, filledSubtrees: endSubtrees } = calculateNextRoot({ hasher, leaves });
     const input = stringifyBigInts({
+        newRoot,
         startIndex: 0,
-        leaves,
         startSubtrees,
         endSubtrees,
-        newRoot
+        leaves,
     });
 
     const { proof, publicSignals } = await generateProof({input, wasmFileName, zkeyFileName});
